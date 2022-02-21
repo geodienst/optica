@@ -47,7 +47,7 @@ export const initialMapState: MapState = {
     },
     zoom: 10,
     zoomLevels: [11, 14, 17],
-    relativeZoomLevels: [-2, 0, 2],
+    relativeZoomLevels: [-3, 0, 3],
     scales: [0, 0, 0],
     extents: [],
     webmapId: WEB_MAP_ID_HYBRID,
