@@ -22,7 +22,7 @@ export type UIState = {
 
 export const initialUIState: UIState = {
     mapPanelsInfo: {
-        direction: 'vertical',
+        direction: 'horizontal',
         num: 3,
     },
     isControlPanelVisible: false,
