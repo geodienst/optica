@@ -42,11 +42,11 @@ export type MapState = {
 export const initialMapState: MapState = {
     indexOfActiveMapPanel: -1,
     center: {
-        lat: 34.05624,
-        lon: -117.1957,
+        lat: 53.238,
+        lon: 6.536,
     },
     zoom: 10,
-    zoomLevels: [10, 12, 14],
+    zoomLevels: [11, 14, 17],
     relativeZoomLevels: [-2, 0, 2],
     scales: [0, 0, 0],
     extents: [],
