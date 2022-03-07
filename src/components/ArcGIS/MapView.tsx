@@ -9,6 +9,8 @@ import IwatchUtils from 'esri/core/watchUtils';
 import IZoom from 'esri/widgets/Zoom';
 import { MapCenter } from '../../store/reducers/Map';
 import { setHashParam } from '../../utils/URLHashParams';
+import IBookmarks from 'esri/widgets/Bookmarks';
+import IExpand from 'esri/widgets/Expand';
 
 loadCss('https://js.arcgis.com/4.21/esri/themes/dark/main.css');
 
@@ -16,6 +18,7 @@ interface Props {
     webmapId: string;
     center: MapCenter;
     zoom: number;
+    speed: number;
     isActiveMapPanel: boolean;
     shouldHideAttribution: boolean;
     centerOnChange: (center: MapCenter) => void;
@@ -31,6 +34,7 @@ const MapView: React.FC<Props> = ({
     webmapId,
     center,
     zoom,
+    speed,
     isActiveMapPanel,
     shouldHideAttribution,
     centerOnChange,
@@ -50,13 +54,27 @@ const MapView: React.FC<Props> = ({
     const [mapView, setMapView] = React.useState<IMapView>(null);
 
     const initMapView = async () => {
-        type Modules = [typeof IMapView, typeof IWebMap, typeof IZoom];
+        type Modules = [
+            typeof IMapView,
+            typeof IWebMap,
+            typeof IZoom,
+            typeof IBookmarks,
+            typeof IExpand
+        ];
 
         try {
-            const [MapView, WebMap, Zoom] = await (loadModules([
+            const [
+                MapView,
+                WebMap,
+                Zoom,
+                Bookmarks,
+                Expand,
+            ] = await (loadModules([
                 'esri/views/MapView',
                 'esri/WebMap',
                 'esri/widgets/Zoom',
+                'esri/widgets/Bookmarks',
+                'esri/widgets/Expand',
                 // 'esri/widgets/Attribution'
             ]) as Promise<Modules>);
 
@@ -89,6 +107,39 @@ const MapView: React.FC<Props> = ({
             const zoomWidget = new Zoom({
                 view,
             });
+            if (!shouldHideAttribution) {
+                const bookmarks = new Bookmarks({
+                    view: view,
+                    // allows bookmarks to be added, edited, or deleted
+                    editingEnabled: false,
+                });
+                bookmarks.goToOverride = function (view, goToParams) {
+                    goToParams.options = {
+                        easing: 'ease',
+                        duration:
+                            view.center.distance(
+                                goToParams.target.targetGeometry.center
+                            ) * speed,
+                    };
+                    return view.goTo(
+                        goToParams.target.targetGeometry.center,
+                        goToParams.options
+                    );
+                };
+
+                const bkExpand = new Expand({
+                    view: view,
+                    content: bookmarks,
+                    expanded: true,
+                });
+                bookmarks.on('bookmark-select', function (event) {
+                    bkExpand.expanded = false;
+                    return false;
+                });
+
+                // Add the widget to the top-right corner of the view
+                view.ui.add(bkExpand, 'top-right');
+            }
 
             view.ui.add(zoomWidget, 'top-right');
 

@@ -9,6 +9,7 @@ import {
     updateZoomLevels,
     updateExtents,
     extentsSelector,
+    SpeedSelector,
     updateScale,
 } from '../../store/reducers/Map';
 import { mapPanelsInfoSelector } from '../../store/reducers/UI';
@@ -33,6 +34,8 @@ const MapPanel: React.FC<Props> = ({
     const webmapId = useSelector(webmapIdSelector);
 
     const center = useSelector(MapCenterSelector);
+
+    const speed = useSelector(SpeedSelector);
 
     // const extents = useSelector(extentsSelector);
 
@@ -71,6 +74,7 @@ const MapPanel: React.FC<Props> = ({
             webmapId={webmapId}
             center={center}
             zoom={zoom}
+            speed={speed}
             isActiveMapPanel={isActivePanel}
             shouldHideAttribution={shouldHideAttribution}
             centerOnChange={(center: MapCenter) => {

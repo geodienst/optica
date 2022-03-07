@@ -31,6 +31,7 @@ export type MapState = {
     zoomLevels?: number[];
     relativeZoomLevels?: number[];
     scales?: number[];
+    speed?: number;
     // extents JSON of each map panel as an array of strings
     extents?: string[];
     webmapId?: string;
@@ -49,6 +50,7 @@ export const initialMapState: MapState = {
     zoomLevels: [11, 14, 17],
     relativeZoomLevels: [-3, 0, 3],
     scales: [0, 0, 0],
+    speed: 7,
     extents: [],
     webmapId: WEB_MAP_ID_HYBRID,
     isLoadingWebmap: false,
@@ -268,6 +270,11 @@ export const webmapIdSelector = createSelector(
 export const MapCenterSelector = createSelector(
     (state: RootState) => state.Map.center,
     (center) => center
+);
+
+export const SpeedSelector = createSelector(
+    (state: RootState) => state.Map.speed,
+    (speed) => speed
 );
 
 export const extentsSelector = createSelector(

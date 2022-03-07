@@ -1,6 +1,6 @@
 import { urlFns } from 'helper-toolkit-ts';
 
-type UrlHashParamKey = 'center' | 'zoom' | 'layout' | 'webmapId';
+type UrlHashParamKey = 'center' | 'zoom' | 'layout' | 'webmapId' | 'speed';
 
 type HashParams = Record<UrlHashParamKey, string>;
 

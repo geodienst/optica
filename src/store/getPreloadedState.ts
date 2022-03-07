@@ -29,7 +29,7 @@ const getPreloadedUIState = (): UIState => {
 };
 
 const getPreloadedMapState = (): MapState => {
-    const { zoom, webmapId, center } = DEFAULT_HASH_PARAMS;
+    const { zoom, webmapId, center, speed } = DEFAULT_HASH_PARAMS;
 
     const state: MapState = {
         ...initialMapState,
@@ -57,6 +57,10 @@ const getPreloadedMapState = (): MapState => {
         ];
         state.zoomLevels = zoomLevels;
         state.relativeZoomLevels = relativeZoomLevels;
+    }
+
+    if (speed) {
+        state.speed = +speed;
     }
 
     return state;
