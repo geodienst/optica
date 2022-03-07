@@ -38,3 +38,8 @@ npm run build
 ## Issues
 
 Find a bug or want to request a new feature?  Please let us know by submitting an issue.
+
+
+## Bookmarks
+
+Load a webmap with bookmarks to fly between the bookmarks. The flight speed is controlled by the speed parameter. 7 = default, 1 = superfast and 100 will make you fly like a snail
